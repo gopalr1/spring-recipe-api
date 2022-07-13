@@ -205,7 +205,7 @@ In this Application the swagger UI is also configured for the API documentation 
 
 Swagger UI URL : http://localhost:8080/swagger-ui/index.html
 
-![ScreenShot](https://raw.github.com/gopalr/spring-recipe-api/master/Swagger.jpg)
+![Swagger](https://user-images.githubusercontent.com/20318317/178837474-319957f3-e93e-4129-8f97-86fe0fda6631.jpg)
 
 
 

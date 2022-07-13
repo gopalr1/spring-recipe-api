@@ -38,7 +38,7 @@ Alternatively you can use the Spring Boot Maven plugin like so:
 
 mvn spring-boot:run
 
-## CustomerDetail API
+## SpringRecipeAPI
 The Application exposes REST Endpoints as below
 
 API Request:
@@ -131,8 +131,6 @@ Request:
 ```
 
 Delete Recipe by id - http://localhost:8080/api/recipe/{id} Http Method : DELETE
-
-![ScreenShot](https://raw.github.com/gopalr1/CustomerDetailAPI/master/PostMan.JPG)
 
 
 Sample JSON Response for get Recipe by id:

@@ -211,9 +211,9 @@ Swagger UI URL : http://localhost:8080/swagger-ui/index.html
 
 ## Test Cases
 
-![Test_Coverage](https://user-images.githubusercontent.com/20318317/178837921-d8f5e8c7-0dee-4e61-833d-734303f1c4a8.jpg)
+![Test_Coverage](https://user-images.githubusercontent.com/20318317/178917685-e31a6137-2cd8-4145-bfb7-8ecc8c347953.jpg)
 
-Unit and Integration cases are written with 87% Test Coverage.
+Unit and Integration cases are written with 88% Test Coverage.
 
 For running test case
 ```

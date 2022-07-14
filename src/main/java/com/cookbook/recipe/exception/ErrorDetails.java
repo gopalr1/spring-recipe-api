@@ -6,7 +6,10 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
+/**
+ * @author gopal_re
+ *
+ */
 @Getter
 public class ErrorDetails implements Serializable {
 

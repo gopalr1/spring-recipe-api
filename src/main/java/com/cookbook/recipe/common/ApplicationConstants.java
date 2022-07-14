@@ -1,5 +1,8 @@
 package com.cookbook.recipe.common;
 
+/**
+ * @author gopal_re
+ */
 public final class ApplicationConstants {
 
     public static final String NAME = "name";

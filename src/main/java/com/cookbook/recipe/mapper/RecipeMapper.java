@@ -7,6 +7,9 @@ import org.mapstruct.Mapping;
 
 import java.util.List;
 
+/**
+ * @author gopal_re
+ */
 @Mapper(componentModel = "spring")
 public interface RecipeMapper {
 

@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 
 import java.util.List;
 
-
+/**
+ * @author gopal_re
+ */
 public interface RecipeService {
     List<Recipe> findAll();
 

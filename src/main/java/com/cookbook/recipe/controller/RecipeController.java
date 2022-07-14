@@ -18,6 +18,11 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * The Controller to handle CRUD and search operations of recipes
+ *
+ * @author gopal_re
+ */
 @RestController
 @Slf4j
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
@@ -28,7 +33,12 @@ public class RecipeController {
 
     private final RecipeMapper recipeMapper;
 
-
+    /**
+     * The API method is to handle get a recipe by id
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Recipe> findById(@PathVariable long id) {
         log.debug("Getting Recipe by id:" + id);
@@ -36,6 +46,11 @@ public class RecipeController {
         return new ResponseEntity<>(recipeModel, HttpStatus.OK);
     }
 
+    /**
+     * The API method is to handle get all recipes
+     *
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<Recipe>> findAll() {
         log.debug("Getting all recipes");
@@ -43,6 +58,12 @@ public class RecipeController {
         return new ResponseEntity<>(recipeList, HttpStatus.OK);
     }
 
+    /**
+     * This API method is to add a new recipes
+     *
+     * @param recipe
+     * @return
+     */
     @PostMapping
     public ResponseEntity<Object> saveRecipe(@Valid @RequestBody Recipe recipe) {
         log.debug("Saving new recipe");
@@ -53,6 +74,12 @@ public class RecipeController {
         return ResponseEntity.created(location).body(String.format("{\"id\":\"%s\"}", recipeCreated.getId()));
     }
 
+    /**
+     * This API method is update an existing recipe by id
+     *
+     * @param recipe
+     * @return
+     */
     @PutMapping()
     public ResponseEntity<Object> updateRecipes(@Valid @RequestBody Recipe recipe) {
         log.debug("Updating recipe by id: " + recipe.getId());
@@ -61,6 +88,12 @@ public class RecipeController {
         return ResponseEntity.ok(recipeResponse);
     }
 
+    /**
+     * This API method is to delete a recipe by id
+     *
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteRecipe(@PathVariable long id) {
         log.debug("Deleting recipe by id: " + id);
@@ -69,6 +102,12 @@ public class RecipeController {
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * This API method is search recipes based on filter params
+     *
+     * @param filterRequest
+     * @return
+     */
     @PostMapping("/search")
     public ResponseEntity<FilterResponse> searchRecipes(@Valid @RequestBody FilterRequest filterRequest) {
 

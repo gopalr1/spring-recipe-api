@@ -15,6 +15,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author gopal_re
+ */
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
@@ -42,11 +45,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
      * @return
      */
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status,
-                                                                  WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.warn("Validation error occurred");
-        List<String> errorList = ex.getBindingResult().getFieldErrors().stream().map(this::prepareError)
-                .collect(Collectors.toList());
+        List<String> errorList = ex.getBindingResult().getFieldErrors().stream().map(this::prepareError).collect(Collectors.toList());
         return new ResponseEntity<>(new ErrorDetails(new Date(), errorList), HttpStatus.BAD_REQUEST);
     }
 

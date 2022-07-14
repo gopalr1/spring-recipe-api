@@ -4,6 +4,9 @@ import com.cookbook.recipe.common.DietType;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * @author gopal_re
+ */
 @Getter
 @Setter
 public class FilterRequest {

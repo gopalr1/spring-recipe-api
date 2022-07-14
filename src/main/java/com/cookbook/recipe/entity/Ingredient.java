@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * @author gopal_re
+ */
 @Getter
 @Setter
 @Entity(

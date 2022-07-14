@@ -13,6 +13,9 @@ import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author gopal_re
+ */
 @Slf4j
 @AllArgsConstructor
 public class SearchSpecification implements Specification<Recipe> {

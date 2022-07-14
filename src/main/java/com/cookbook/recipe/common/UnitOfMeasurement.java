@@ -2,6 +2,9 @@ package com.cookbook.recipe.common;
 
 import lombok.AllArgsConstructor;
 
+/**
+ * @author gopal_re
+ */
 @AllArgsConstructor
 public enum UnitOfMeasurement {
     GRAM("Gram"), MILLI_LITRE("Milli_Litre"), OUNCE("Onunce"), TABLE_SPOON("Table_Spoon"), NUMBERS("nos");

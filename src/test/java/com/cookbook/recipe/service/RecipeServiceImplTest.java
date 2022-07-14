@@ -99,13 +99,69 @@ class RecipeServiceImplTest {
         when(criteriaBuilder.like(criteriaBuilder.lower(root.get("instructions")), "%oven%")).thenReturn(instructionsPredicate);
         Predicate finalPredicate = mock(Predicate.class);
 
-        when(criteriaBuilder.and(dietTypePredicate, instructionsPredicate,noOfServingsPredicate)).thenReturn(finalPredicate);
+        when(criteriaBuilder.and(dietTypePredicate, instructionsPredicate, noOfServingsPredicate)).thenReturn(finalPredicate);
 
         when(recipeRepository.findAll(any(Specification.class), eq(PageRequest.of(0, 10)))).thenReturn(page);
         FilterRequest filterRequest = new FilterRequest();
         filterRequest.setDietType(DietType.VEGETARIAN);
         filterRequest.setNoOfServings(2);
         filterRequest.setInstructions("Oven");
+        filterRequest.setNoOfRecords(10);
+        filterRequest.setPageNumber(0);
+        Page<Recipe> result = recipeService.searchRecipe(filterRequest);
+
+        assertEquals(1, result.get().count());
+
+        ArgumentCaptor<Specification<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Specification.class);
+        verify(recipeRepository).findAll(argumentCaptor.capture(), eq(PageRequest.of(0, 10)));
+        Specification<Recipe> specificationValue = argumentCaptor.getValue();
+        assertEquals(finalPredicate, specificationValue.toPredicate(root, criteriaQuery, criteriaBuilder));
+    }
+
+    @Test
+    void testSearchRecipeWithContains() {
+        Page<Recipe> page = new PageImpl(List.of(createMockEntity()), PageRequest.of(0, 10), 1);
+
+        CriteriaBuilder criteriaBuilder = mock(CriteriaBuilder.class);
+        CriteriaQuery criteriaQuery = mock(CriteriaQuery.class);
+        Root<Recipe> root = mock(Root.class);
+
+
+        Join<Object, Object> joinIngredient = mock(Join.class);
+
+        Expression expression = mock(Expression.class);
+
+        Path<Object> dietTypePath = mock(Path.class);
+        Path<Object> noOfServingsPath = mock(Path.class);
+        Path<Object> instructionsPath = mock(Path.class);
+        Path<Object> ingredientPath = mock(Path.class);
+
+        when(root.get("dietType")).thenReturn(dietTypePath);
+        when(root.get("servings")).thenReturn(noOfServingsPath);
+        when(root.get("instructions")).thenReturn(instructionsPath);
+        when(root.join("ingredient")).thenReturn(joinIngredient);
+        when(joinIngredient.get("name")).thenReturn(ingredientPath);
+        when(criteriaBuilder.lower((Expression) ingredientPath)).thenReturn(expression);
+
+        Predicate dietTypePredicate = mock(Predicate.class);
+        Predicate noOfServingsPredicate = mock(Predicate.class);
+        Predicate instructionsPredicate = mock(Predicate.class);
+        Predicate ingredientPredicate = mock(Predicate.class);
+
+        when(criteriaBuilder.equal(root.get("dietType"), DietType.VEGETARIAN)).thenReturn(dietTypePredicate);
+        when(criteriaBuilder.equal(root.get("servings"), 2)).thenReturn(noOfServingsPredicate);
+        when(criteriaBuilder.like(criteriaBuilder.lower(root.get("instructions")), "%oven%")).thenReturn(instructionsPredicate);
+        when(criteriaBuilder.lower(root.join("ingredient").get("name")).in("wheat")).thenReturn(ingredientPredicate);
+        Predicate finalPredicate = mock(Predicate.class);
+
+        when(criteriaBuilder.and(dietTypePredicate, instructionsPredicate, noOfServingsPredicate, ingredientPredicate)).thenReturn(finalPredicate);
+
+        when(recipeRepository.findAll(any(Specification.class), eq(PageRequest.of(0, 10)))).thenReturn(page);
+        FilterRequest filterRequest = new FilterRequest();
+        filterRequest.setDietType(DietType.VEGETARIAN);
+        filterRequest.setNoOfServings(2);
+        filterRequest.setInstructions("Oven");
+        filterRequest.setContainsIngredient("Wheat");
         filterRequest.setNoOfRecords(10);
         filterRequest.setPageNumber(0);
         Page<Recipe> result = recipeService.searchRecipe(filterRequest);

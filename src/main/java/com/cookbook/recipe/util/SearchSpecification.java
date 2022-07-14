@@ -6,6 +6,7 @@ import com.cookbook.recipe.entity.Recipe;
 import com.cookbook.recipe.model.FilterRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
@@ -25,16 +26,16 @@ public class SearchSpecification implements Specification<Recipe> {
         if (request.getDietType() != null) {
             predicates.add(cb.equal(root.get(ApplicationConstants.DIET_TYPE), request.getDietType()));
         }
-        if (request.getInstructions() != null && !request.getInstructions().isBlank()) {
+        if (!StringUtils.isBlank(request.getInstructions())) {
             predicates.add(cb.like(cb.lower(root.get(ApplicationConstants.INSTRUCTIONS)), "%" + request.getInstructions().toLowerCase() + "%"));
         }
         if (request.getNoOfServings() != null) {
             predicates.add(cb.equal(root.get(ApplicationConstants.SERVINGS), request.getNoOfServings()));
         }
-        if (request.getContainsIngredient() != null && !request.getContainsIngredient().isBlank()) {
+        if (!StringUtils.isBlank(request.getContainsIngredient())) {
             predicates.add(cb.lower(root.join(ApplicationConstants.INGREDIENT).get(ApplicationConstants.NAME)).in(request.getContainsIngredient().toLowerCase()));
         }
-        if (request.getNotContainsIngredient() != null && !request.getNotContainsIngredient().isBlank()) {
+        if (!StringUtils.isBlank(request.getNotContainsIngredient())) {
             Subquery<Recipe> sq = query.subquery(Recipe.class);
             Root<Ingredient> project = sq.from(Ingredient.class);
             Join<Ingredient, Recipe> sqEmp = project.join(ApplicationConstants.RECIPE);
